@@ -24,7 +24,7 @@ gem 'sidekiq', '~> 6.2.1'
 gem 'nilify_blanks', '~> 1.4'
 
 # Backoffice
-gem 'activeadmin', '~> 2.8.1'
+gem 'activeadmin', '~> 2.9.0'
 gem 'activeadmin_addons', '~> 1.7.1'
 gem 'active_admin_theme', '~> 1.1'
 gem 'chartkick', '~> 4.0.4'
