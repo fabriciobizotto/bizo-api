@@ -43,6 +43,12 @@ module RailsApiBoilerplate
     config.generators do |gen|
       gen.test_framework :rspec
       gen.fixture_replacement :factory_bot, dir: 'spec/factories'
+      gen.stylesheets false
+      gen.javascripts false
+      gen.views false
     end
+
+    config.api_only = true
+    config.app_generators.scaffold_controller = :scaffold_controller
   end
 end

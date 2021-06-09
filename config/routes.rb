@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :users, only: %i[show update]
       resources :beers, only: %i[show index create update destroy]
+      resources :accounts
 
       devise_scope :user do
         resources :users, only: [] do

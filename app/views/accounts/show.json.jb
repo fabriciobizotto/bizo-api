@@ -1,0 +1,8 @@
+{
+  id: @account.id,
+  title: @account.title,
+  active: @account.active,
+  investment: @account.investment,
+  created_at: @account.created_at,
+  updated_at: @account.updated_at
+}
