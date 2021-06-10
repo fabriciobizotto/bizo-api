@@ -1,0 +1,8 @@
+{
+  id: @tag.id,
+  title: @tag.title,
+  active: @tag.active,
+  user_id: @tag.user_id,
+  created_at: @tag.created_at,
+  updated_at: @tag.updated_at
+}

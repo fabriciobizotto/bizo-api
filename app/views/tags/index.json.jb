@@ -1,0 +1,9 @@
+@tags.map do |tag|
+  {
+    id: tag.id,
+    title: tag.title,
+    active: tag.active,
+    user_id: tag.user_id,
+    url: tag_url(tag, format: :json)
+  }
+end

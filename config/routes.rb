@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resource :users, only: %i[show update]
       resources :beers, only: %i[show index create update destroy]
       resources :accounts
+      resources :tags
 
       devise_scope :user do
         resources :users, only: [] do
