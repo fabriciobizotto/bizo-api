@@ -2,11 +2,11 @@ module Api
   module V1
     class AccountsController < Api::V1::ApiController
       before_action :set_account, only: [:show, :update, :destroy]
-      skip_before_action :authenticate_user!, only: [:index]
+      # skip_before_action :authenticate_user!, only: [:index]
 
       # GET /accounts
       def index
-        @accounts = Account.all
+        @accounts = Account.allByUser(current_user)
 
         render json: @accounts
       end
@@ -21,10 +21,16 @@ module Api
         @account = Account.new(account_params)
 
         if @account.save
-          render json: @account, status: :created, location: @account
+          render json: @account, status: :created#, location: @account
         else
           render json: @account.errors, status: :unprocessable_entity
         end
+
+        # if @account.save
+        #   render json: {status: 'SUCCESS', message:'Conta criada com sucesso!', data:@account}, status: :created
+        # else
+        #   render json: {status: 'ERROR', message:'Erro ao criar a conta!', data:@account.errors}, status: :unprocessable_entity
+        # end
       end
 
       # PATCH/PUT /accounts/1
@@ -49,7 +55,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def account_params
-          params.require(:account).permit(:title, :active, :investment)
+          params.require(:account).permit(:title, :active, :investment, :user_id).merge(user:current_user)
         end
     end
   end
