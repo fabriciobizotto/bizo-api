@@ -1,0 +1,7 @@
+{
+  id: @category.id,
+  title: @category.title,
+  active: @category.active,
+  created_at: @category.created_at,
+  updated_at: @category.updated_at,
+}
