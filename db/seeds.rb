@@ -16,3 +16,19 @@ unless Beer.count.positive?
   Beer.create!(name: 'Sol', abv: 1.5)
   Beer.create!(name: 'Bud', abv: 2.0)
 end
+
+unless Lancamento.count.positive?
+  lancamento = Lancamento.find_or_create_by!(
+    title: 'Testando...',
+    dtlcto: Time.now,
+    dtpgto: Time.now,
+    vllcto: 10.00,
+    vlpgto: 10.00,
+    category: Category.first,
+    account: Account.first,
+    user: User.first,
+    pagar: false
+  )
+  lancamento.update(tags: Tag.all) if lancamento.save!
+
+end

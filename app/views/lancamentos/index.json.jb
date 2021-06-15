@@ -1,0 +1,16 @@
+@lancamentos.map do |lancamento|
+  {
+    id: lancamento.id,
+    title: lancamento.title,
+    dtlcto: lancamento.dtlcto,
+    dtpgto: lancamento.dtpgto,
+    vllcto: lancamento.vllcto,
+    vlpgto: lancamento.vlpgto,
+    pagar: lancamento.pagar,
+    despesa: lancamento.despesa,
+    category_id: lancamento.category_id,
+    account_id: lancamento.account_id,
+    user_id: lancamento.user_id,
+    url: lancamento_url(lancamento, format: :json)
+  }
+end

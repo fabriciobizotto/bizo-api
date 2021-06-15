@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_13_234301) do
+ActiveRecord::Schema.define(version: 2021_06_15_141214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,31 @@ ActiveRecord::Schema.define(version: 2021_06_13_234301) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "lancamentos", force: :cascade do |t|
+    t.string "title", limit: 100, null: false
+    t.date "dtlcto", null: false
+    t.date "dtpgto"
+    t.decimal "vllcto"
+    t.decimal "vlpgto"
+    t.boolean "pagar", null: false
+    t.bigint "category_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "despesa", default: true
+    t.index ["account_id"], name: "index_lancamentos_on_account_id"
+    t.index ["category_id"], name: "index_lancamentos_on_category_id"
+    t.index ["user_id"], name: "index_lancamentos_on_user_id"
+  end
+
+  create_table "lancamentos_tags", primary_key: ["lancamento_id", "tag_id"], force: :cascade do |t|
+    t.integer "lancamento_id", null: false
+    t.integer "tag_id", null: false
+    t.index ["lancamento_id", "tag_id"], name: "index_lancamentos_tags_on_lancamento_id_and_tag_id"
+    t.index ["tag_id", "lancamento_id"], name: "index_lancamentos_tags_on_tag_id_and_lancamento_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "title", null: false
     t.boolean "active", default: true, null: false
@@ -94,5 +119,8 @@ ActiveRecord::Schema.define(version: 2021_06_13_234301) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "lancamentos", "accounts"
+  add_foreign_key "lancamentos", "categories"
+  add_foreign_key "lancamentos", "users"
   add_foreign_key "tags", "users"
 end

@@ -19,7 +19,10 @@ Rails.application.routes.draw do
       resources :beers, only: %i[show index create update destroy]
       resources :accounts
       resources :tags
-      resources :categories
+      resources :categories do
+        get :disponiveis, on: :collection
+      end
+      resources :lancamentos
 
       devise_scope :user do
         resources :users, only: [] do

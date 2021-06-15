@@ -12,6 +12,12 @@ module Api
         render json: @categories.as_json(include: :category)
       end
 
+      def disponiveis
+        @disponiveis = Category.left_outer_joins(:category).allByUser(current_user).where(active: true)
+
+        render json: @disponiveis
+      end
+
       # GET /categories/1
       def show
         render json: @category

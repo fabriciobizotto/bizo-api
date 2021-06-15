@@ -1,0 +1,15 @@
+{
+  id: @lancamento.id,
+  title: @lancamento.title,
+  dtlcto: @lancamento.dtlcto,
+  dtpgto: @lancamento.dtpgto,
+  vllcto: @lancamento.vllcto,
+  vlpgto: @lancamento.vlpgto,
+  pagar: @lancamento.pagar,
+  despesa: lancamento.despesa,
+  category_id: @lancamento.category_id,
+  account_id: @lancamento.account_id,
+  user_id: @lancamento.user_id,
+  created_at: @lancamento.created_at,
+  updated_at: @lancamento.updated_at
+}

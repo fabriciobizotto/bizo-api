@@ -1,7 +1,7 @@
 module Api
   module V1
     class AccountsController < Api::V1::ApiController
-      before_action :set_account, only: [:show, :update, :destroy]
+      before_action :set_account, only: %i[show update destroy]
       # skip_before_action :authenticate_user!, only: [:index]
 
       # GET /accounts
@@ -21,7 +21,7 @@ module Api
         @account = Account.new(account_params)
 
         if @account.save
-          render json: @account, status: :created#, location: @account
+          render json: @account, status: :created # , location: @account
         else
           render json: @account.errors, status: :unprocessable_entity
         end
@@ -48,15 +48,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_account
-          @account = Account.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def account_params
-          params.require(:account).permit(:title, :active, :investment, :user_id).merge(user:current_user)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_account
+        @account = Account.find(params[:id])
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def account_params
+        params.require(:account).permit(:title, :active, :investment,
+                                        :user_id).merge(user: current_user)
+      end
     end
   end
 end
