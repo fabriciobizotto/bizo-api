@@ -1,7 +1,7 @@
 module Api
   module V1
     class TagsController < Api::V1::ApiController
-      before_action :set_tag, only: [:show, :update, :destroy]
+      before_action :set_tag, only: %i[show update destroy]
 
       # GET /tags
       def index
@@ -20,7 +20,7 @@ module Api
         @tag = Tag.new(tag_params)
 
         if @tag.save
-          render json: @tag, status: :created#, location: @tag
+          render json: @tag, status: :created # , location: @tag
         else
           render json: @tag.errors, status: :unprocessable_entity
         end
@@ -41,15 +41,16 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_tag
-          @tag = Tag.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def tag_params
-          params.require(:tag).permit(:title, :active, :user_id).merge(user:current_user)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_tag
+        @tag = Tag.find(params[:id])
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def tag_params
+        params.require(:tag).permit(:title, :active, :user_id).merge(user: current_user)
+      end
     end
   end
 end

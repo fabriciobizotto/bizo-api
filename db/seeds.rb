@@ -24,8 +24,8 @@ unless Lancamento.count.positive?
     dtpgto: Time.now,
     vllcto: 10.00,
     vlpgto: 10.00,
-    category: Category.first,
-    account: Account.first,
+    category: Category.where(user: User.first).first,
+    account: Account.where(user: User.first).first,
     user: User.first,
     pagar: false
   )

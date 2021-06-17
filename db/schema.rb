@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 2021_06_15_141214) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "lancamento_tags", force: :cascade do |t|
+    t.bigint "lancamento_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lancamento_id"], name: "index_lancamento_tags_on_lancamento_id"
+    t.index ["tag_id"], name: "index_lancamento_tags_on_tag_id"
+  end
+
   create_table "lancamentos", force: :cascade do |t|
     t.string "title", limit: 100, null: false
     t.date "dtlcto", null: false
@@ -70,13 +79,6 @@ ActiveRecord::Schema.define(version: 2021_06_15_141214) do
     t.index ["account_id"], name: "index_lancamentos_on_account_id"
     t.index ["category_id"], name: "index_lancamentos_on_category_id"
     t.index ["user_id"], name: "index_lancamentos_on_user_id"
-  end
-
-  create_table "lancamentos_tags", primary_key: ["lancamento_id", "tag_id"], force: :cascade do |t|
-    t.integer "lancamento_id", null: false
-    t.integer "tag_id", null: false
-    t.index ["lancamento_id", "tag_id"], name: "index_lancamentos_tags_on_lancamento_id_and_tag_id"
-    t.index ["tag_id", "lancamento_id"], name: "index_lancamentos_tags_on_tag_id_and_lancamento_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -119,6 +121,8 @@ ActiveRecord::Schema.define(version: 2021_06_15_141214) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "lancamento_tags", "lancamentos"
+  add_foreign_key "lancamento_tags", "tags"
   add_foreign_key "lancamentos", "accounts"
   add_foreign_key "lancamentos", "categories"
   add_foreign_key "lancamentos", "users"

@@ -18,9 +18,15 @@ module Api
       # POST /lancamentos
       def create
         @lancamento = Lancamento.new(lancamento_params)
+        # @lancamento.tags.delete_all if params[:tags].any?
+        if params[:tags]
+          tags = Tag.where(id: params[:tags].pluck(:id))
+          @lancamento.tags.push(tags)
+        end
 
         if @lancamento.save
-          render json: @lancamentos.as_json(include: %i[category account tags]), status: :created # , location: @lancamento
+
+          render json: @lancamento.as_json(include: %i[category account tags]), status: :created # , location: @lancamento
         else
           render json: @lancamento.errors, status: :unprocessable_entity
         end
@@ -28,6 +34,10 @@ module Api
 
       # PATCH/PUT /lancamentos/1
       def update
+        @lancamento.tags.delete_all # if params[:tags].any?
+        tags = Tag.where(id: params[:tags].pluck(:id))
+        @lancamento.tags.push(tags)
+
         if @lancamento.update(lancamento_params)
           render json: @lancamento.as_json(include: %i[category account tags])
         else
@@ -49,8 +59,8 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def lancamento_params
-        params.require(:lancamento).permit(:title, :dtlcto, :dtpgto, :vllcto, :vlpgto, :pagar, :despesa,
-                                           :category_id, :account_id, :user_id).merge(user: current_user)
+        params.require(:lancamento).permit(:title, :dtlcto, :dtpgto, :vllcto, :vlpgto, :pagar,
+                                           :despesa, :category_id, :account_id, :user_id, tags_attributes: %i[id title active user_id created_at updated_at]).merge(user: current_user)
       end
     end
   end

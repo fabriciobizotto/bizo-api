@@ -32,7 +32,10 @@ class Lancamento < ApplicationRecord
   belongs_to :category
   belongs_to :account
   belongs_to :user
-  has_and_belongs_to_many :tags
+  # has_and_belongs_to_many :tags
+  has_many :lancamento_tags
+  has_many :tags, through: :lancamento_tags, dependent: :destroy
+  accepts_nested_attributes_for :tags
 
   scope :allByUser, ->(user) { where(user: user) }
 end

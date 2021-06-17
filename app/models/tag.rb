@@ -19,7 +19,9 @@
 #
 class Tag < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :lancamentos
+  # has_and_belongs_to_many :lancamentos
+  has_many :lancamento_tags
+  has_many :lancamentos, through: :lancamento_tags
 
-  scope :allByUser, ->(user){ where(user: user) }
+  scope :allByUser, ->(user) { where(user: user) }
 end
