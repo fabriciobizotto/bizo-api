@@ -5,7 +5,14 @@ module Api
 
       # GET /lancamentos
       def index
-        @lancamentos = Lancamento.joins(:category).joins(:account).allByUser(current_user)
+        if params[:ano] && params[:mes]
+          dtinicio = Date.new(params[:ano].to_i, params[:mes].to_i, 1)
+          dtfim = dtinicio.next_month.prev_day
+
+          @lancamentos = Lancamento.joins(:category).joins(:account).allByUser(current_user).where(dtlcto: (dtinicio..dtfim)).order('dtlcto ASC')
+        else
+          @lancamentos = Lancamento.joins(:category).joins(:account).allByUser(current_user)
+        end
 
         render json: @lancamentos.as_json(include: %i[category account tags])
       end
