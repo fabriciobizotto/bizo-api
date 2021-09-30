@@ -8,6 +8,7 @@ module ExceptionHandler
     rescue_from ActionView::Template::Error, with: :handle_template_error
     rescue_from ActiveRecord::RecordInvalid, with: :render_record_invalid
     rescue_from Pagy::OverflowError, with: :render_page_overflow
+    rescue_from ActiveRecord::InvalidForeignKey, with: :render_foreign_key_error
 
     before_action :set_raven_context
   end
@@ -26,6 +27,10 @@ module ExceptionHandler
 
   def render_parameter_missing(exception)
     render_errors(I18n.t('errors.missing_param', param: exception.param.to_s), :bad_request)
+  end
+
+  def render_foreign_key_error(_exception)
+    render_errors('Não foi possível excluir este ítem. Existem registros vinculados.', :conflict)
   end
 
   def render_record_not_found(exception)
